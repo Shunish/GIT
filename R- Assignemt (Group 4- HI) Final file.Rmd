@@ -1,0 +1,150 @@
+---
+title: "R Assignment"
+output: pdf_document
+date: '2022-04-08'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+Dataset<- read.csv(file.choose())
+```
+
+#Printing structure
+```{r}
+str(Dataset)
+```
+
+#List of Varibles 
+```{r}
+ list(Dataset)
+```
+
+#Print top 15 rows of dataset
+```{r}
+  head(Dataset, 15) 
+```
+
+#One user defined function
+```{r}
+  max(Dataset$Total)
+ 
+  Dataset$X1980 > Dataset$X1981
+
+```
+
+#Use data manipulation techniques and filter rows based on any logical criteria that exist in your dataset
+## R Markdown
+```{r}
+  library("dplyr")
+  
+    library("tidyverse")
+   
+   IndiaImmgration<- filter(as.data.frame(Dataset%>% select(1,5,38)),Country=="India")
+   
+   IndiaImmgration
+
+```
+
+#Remove Missing Values 
+```{r}
+   is.na(Dataset)
+   
+   na.omit(Dataset)
+
+```
+
+#Identify and remove duplicate data from your data set
+```{r}
+   SampleDuplicate<- c(1,1,2,3,4,1,5,6)
+   
+   SampleDuplicate
+   
+   duplicated(SampleDuplicate)
+     
+    SampleDuplicate[duplicated(SampleDuplicate)]
+    SampleDuplicate[!duplicated(SampleDuplicate)]
+
+```
+
+#Reorder multiple rows in descending order.
+```{r}
+    library(dplyr)
+    
+    Dataset%>%arrange(desc(X2001), desc(X2002))
+
+```
+
+#Rename Coloumns
+```{r}
+names(Dataset)[2]= "Continent1"
+```
+
+#Add new variables in your data frame by using a mathematical function
+```{r}
+Dataset%>%mutate(newTotal=Total*2)
+```
+
+#Create a training set using random number generator engine.
+```{r}
+    (N <- nrow(Dataset))
+    
+   (target <- round(N*0.80))
+   
+   gp <- runif(N)
+   
+   Dataset_train <- Dataset[gp< 0.80,]
+   
+   nrow(Dataset_train)
+
+```
+
+#Print the summary statistics of your dataset
+```{r}
+   summary(Dataset)
+   
+   Dataset%>%group_by(Total)%>%summarise(mean(Total))
+
+```
+
+#Use any of the numerical variables from the dataset and perform the following statistical functions
+```{r}
+   mean(Dataset$Total)
+   
+   median(Dataset$Total)
+   
+   mode(Dataset$Total)
+   
+   range(Dataset$Total)
+
+```
+
+#Plot a scatter plot for any 2 variables in your dataset  
+```{r}
+ 
+  ggplot(data = Dataset, 
+         aes(x=Continent1, y=X2013, colour=X2013)) +
+     geom_point()
+
+```
+
+#Plot a bar plot for any 2 variables in your dataset
+```{r}
+  ggplot(data = Dataset, 
+         aes( x=DevName, fill= factor(Dataset$Continent))) +
+     geom_bar()
+
+```
+
+#Find the correlation between any 2 variables by applying least square linear regression model
+```{r}
+   X= Dataset$Total
+   Y= Dataset$X2013
+   xycorr= cor(Y,X,method = "pearson")
+   xycorr
+
+```
+
+
+
